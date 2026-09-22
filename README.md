@@ -14,7 +14,6 @@ Dibangun sebagai bagian dari Sumatif Tengah Semester — LKPD Laravel Client Bri
 - [Role \& Hak Akses](#role--hak-akses)
 - [Tech Stack](#tech-stack)
 - [Struktur Database](#struktur-database)
-- [Instalasi](#instalasi)
 - [Struktur Role \& Middleware](#struktur-role--middleware)
 - [Kompetensi yang Diterapkan](#kompetensi-yang-diterapkan)
 
@@ -70,37 +69,6 @@ users (M) ──── (M) events   →  dijembatani oleh registrations
 | `events` | Data event: judul, deskripsi, lokasi, jadwal, kapasitas, status |
 | `registrations` | Data pendaftaran peserta ke event, beserta status approval |
 
-## Instalasi
-
-```bash
-# Clone repository
-git clone <repo-url> evently
-cd evently
-
-# Install dependencies
-composer install
-npm install
-
-# Setup environment
-cp .env.example .env
-php artisan key:generate
-```
-
-Lanjutkan setup:
-
-```bash
-# Buat database "evently" di MySQL terlebih dahulu, lalu:
-php artisan migrate
-
-# (opsional) seed data awal
-php artisan db:seed
-
-# Build assets
-npm run build
-
-# Jalankan server
-php artisan serve
-```
 
 ## Struktur Role & Middleware
 
