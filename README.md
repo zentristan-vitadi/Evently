@@ -1,4 +1,4 @@
-# Evently
+<p align="center"> <img src="public/images/EventlyLOGO/logo.png" alt="Evently Logo" width="200"> </p>
 
 Sistem pengelolaan event berbasis web untuk membantu organisasi sekolah mengelola event (seminar, workshop, lomba, pelatihan) secara terstruktur, terpusat, dan mudah dipantau — lengkap dengan pendaftaran peserta dan hak akses berbasis role.
 
@@ -8,16 +8,15 @@ Dibangun sebagai bagian dari Sumatif Tengah Semester — LKPD Laravel Client Bri
 
 ## Daftar Isi
 
-- [Evently](#evently)
-  - [Daftar Isi](#daftar-isi)
-  - [Latar Belakang](#latar-belakang)
-  - [Fitur](#fitur)
-  - [Role \& Hak Akses](#role--hak-akses)
-  - [Tech Stack](#tech-stack)
-  - [Struktur Database](#struktur-database)
-  - [Instalasi](#instalasi)
-  - [Struktur Role \& Middleware](#struktur-role--middleware)
-  - [Kompetensi yang Diterapkan](#kompetensi-yang-diterapkan)
+- [Daftar Isi](#daftar-isi)
+- [Latar Belakang](#latar-belakang)
+- [Fitur](#fitur)
+- [Role \& Hak Akses](#role--hak-akses)
+- [Tech Stack](#tech-stack)
+- [Struktur Database](#struktur-database)
+- [Instalasi](#instalasi)
+- [Struktur Role \& Middleware](#struktur-role--middleware)
+- [Kompetensi yang Diterapkan](#kompetensi-yang-diterapkan)
 
 ---
 
@@ -85,17 +84,6 @@ npm install
 # Setup environment
 cp .env.example .env
 php artisan key:generate
-```
-
-Sesuaikan kredensial database di `.env`:
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=evently
-DB_USERNAME=root
-DB_PASSWORD=
 ```
 
 Lanjutkan setup:
