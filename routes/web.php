@@ -26,12 +26,13 @@ Route::middleware(['auth'])->group(function () {
 
     // Peserta routes
     Route::middleware('role:peserta')->group(function () {
-        Route::post('/events/register', [RegistrationController::class, 'store'])->name('events.register');
+        Route::get('/events/{event}/register', [RegistrationController::class, 'create'])->name('events.register');
+        Route::post('/events/register', [RegistrationController::class, 'store'])->name('events.register.store');
         Route::get('/my-registrations', [RegistrationController::class, 'myRegistrations'])->name('my.registrations');
         Route::delete('/my-registrations/{registration}', [RegistrationController::class, 'cancel'])->name('my.registrations.cancel');
     });
 
-    // Panitia & Admin routes (Event and Registration Management)
+    // Panitia & Admin routes 
     Route::middleware('role:admin,panitia')->group(function () {
         Route::get('/manage/events', [EventController::class, 'index'])->name('manage.events.index');
         Route::get('/manage/events/create', [EventController::class, 'create'])->name('manage.events.create');
@@ -44,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/manage/registrations/{registration}/status', [RegistrationController::class, 'updateStatus'])->name('manage.registrations.update-status');
     });
 
-    // Admin only routes
+    // Admin routes
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('categories', CategoryController::class)->except(['show']);
         Route::resource('users', UserController::class)->except(['show']);

@@ -92,8 +92,11 @@
                                 @endphp
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-6 py-4">
-                                        <div class="font-bold text-gray-900">{{ $reg->user->name }}</div>
-                                        <div class="text-xs text-gray-500">{{ $reg->user->email }}</div>
+                                        <div class="font-bold text-gray-900">{{ $reg->name ?? $reg->user->name }}</div>
+                                        <div class="text-xs text-gray-500">{{ $reg->email ?? $reg->user->email }}</div>
+                                        @if ($reg->phone_number)
+                                            <div class="text-xs text-indigo-600 font-mono mt-0.5">📞 {{ $reg->phone_number }}</div>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="font-medium text-gray-900 mb-0.5">
@@ -136,7 +139,7 @@
                                         @endif
 
                                         @if ($reg->status !== 'rejected')
-                                            <form method="POST" action="{{ route('manage.registrations.update-status', $reg) }}" class="inline-block">
+                                            <form method="POST" action="{{ route('manage.registrations.update-status', $reg) }}" class="inline-block confirm-action" data-title="Tolak Pendaftaran?" data-text="Apakah Anda yakin ingin menolak pendaftaran calon peserta ini?" data-confirm-color="#e11d48">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="rejected">

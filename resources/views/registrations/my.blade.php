@@ -104,7 +104,7 @@
                                         </a>
 
                                         @if ($reg->status === 'pending')
-                                            <form method="POST" action="{{ route('my.registrations.cancel', $reg) }}" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pendaftaran ini?');">
+                                            <form method="POST" action="{{ route('my.registrations.cancel', $reg) }}" class="inline-block confirm-action" data-title="Batalkan Pendaftaran?" data-text="Apakah Anda yakin ingin membatalkan pendaftaran event ini?" data-confirm-color="#e11d48">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded text-xs font-semibold transition">

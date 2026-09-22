@@ -144,6 +144,9 @@ class DatabaseSeeder extends Seeder
             'user_id' => $peserta1->id,
             'event_id' => $createdEvents[0]->id,
         ], [
+            'name' => $peserta1->name,
+            'email' => $peserta1->email,
+            'phone_number' => '081234567890',
             'status' => 'approved',
             'registered_at' => now()->subDays(2),
         ]);
@@ -153,6 +156,9 @@ class DatabaseSeeder extends Seeder
             'user_id' => $peserta1->id,
             'event_id' => $createdEvents[1]->id,
         ], [
+            'name' => $peserta1->name,
+            'email' => $peserta1->email,
+            'phone_number' => '081234567890',
             'status' => 'pending',
             'registered_at' => now()->subDay(),
         ]);
@@ -162,6 +168,9 @@ class DatabaseSeeder extends Seeder
             'user_id' => $peserta2->id,
             'event_id' => $createdEvents[0]->id,
         ], [
+            'name' => $peserta2->name,
+            'email' => $peserta2->email,
+            'phone_number' => '089876543210',
             'status' => 'pending',
             'registered_at' => now()->subHours(5),
         ]);
@@ -171,6 +180,9 @@ class DatabaseSeeder extends Seeder
             'user_id' => $peserta3->id,
             'event_id' => $createdEvents[0]->id,
         ], [
+            'name' => $peserta3->name,
+            'email' => $peserta3->email,
+            'phone_number' => '085678901234',
             'status' => 'approved',
             'registered_at' => now()->subDays(3),
         ]);
@@ -180,6 +192,9 @@ class DatabaseSeeder extends Seeder
             'user_id' => $peserta2->id,
             'event_id' => $createdEvents[3]->id,
         ], [
+            'name' => $peserta2->name,
+            'email' => $peserta2->email,
+            'phone_number' => '089876543210',
             'status' => 'approved',
             'registered_at' => now()->subDays(4),
         ]);

@@ -103,7 +103,7 @@
                                         </a>
 
                                         @if ($u->id !== Auth::id())
-                                            <form method="POST" action="{{ route('admin.users.destroy', $u) }}" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                            <form method="POST" action="{{ route('admin.users.destroy', $u) }}" class="inline-block confirm-action" data-title="Hapus Pengguna?" data-text="Apakah Anda yakin ingin menghapus akun pengguna {{ $u->name }}?" data-confirm-color="#e11d48">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded text-xs font-semibold transition">

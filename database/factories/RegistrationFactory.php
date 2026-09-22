@@ -19,6 +19,9 @@ class RegistrationFactory extends Factory
         return [
             'user_id' => User::factory()->peserta(),
             'event_id' => Event::factory(),
+            'name' => fake()->name(),
+            'email' => fake()->safeEmail(),
+            'phone_number' => fake()->phoneNumber(),
             'status' => 'pending',
             'registered_at' => now(),
         ];

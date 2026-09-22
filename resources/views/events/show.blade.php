@@ -118,7 +118,7 @@
                         @guest
                             <div class="p-4 bg-gray-50 rounded-lg text-center">
                                 <p class="text-sm text-gray-600 mb-3">Silakan login terlebih dahulu untuk mendaftar ke kegiatan ini.</p>
-                                <a href="{{ route('login') }}" class="block w-full text-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-sm transition text-sm">
+                                <a href="{{ route('events.register', $event) }}" class="block w-full text-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-sm transition text-sm">
                                     Login untuk Mendaftar
                                 </a>
                             </div>
@@ -149,7 +149,7 @@
                                         </p>
 
                                         @if ($userRegistration->status === 'pending')
-                                            <form method="POST" action="{{ route('my.registrations.cancel', $userRegistration) }}" class="mt-4" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pendaftaran ini?');">
+                                            <form method="POST" action="{{ route('my.registrations.cancel', $userRegistration) }}" class="mt-4 confirm-action" data-title="Batalkan Pendaftaran?" data-text="Apakah Anda yakin ingin membatalkan pendaftaran event ini?">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="w-full text-center px-3 py-1.5 bg-rose-100 hover:bg-rose-200 text-rose-700 text-xs font-semibold rounded transition">
@@ -160,13 +160,9 @@
                                     </div>
                                 @else
                                     @if ($event->canAcceptRegistrations())
-                                        <form method="POST" action="{{ route('events.register') }}">
-                                            @csrf
-                                            <input type="hidden" name="event_id" value="{{ $event->id }}">
-                                            <button type="submit" class="w-full text-center px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md hover:shadow transition">
-                                                Daftar Event Ini Sekarang
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('events.register', $event) }}" class="block w-full text-center px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-md hover:shadow transition">
+                                            Pesan Tiket / Daftar Sekarang
+                                        </a>
                                     @elseif ($event->isFull())
                                         <div class="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-sm text-center rounded-lg font-medium">
                                             Maaf, kuota pendaftaran event ini sudah penuh.

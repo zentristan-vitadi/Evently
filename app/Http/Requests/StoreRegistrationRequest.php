@@ -17,6 +17,9 @@ class StoreRegistrationRequest extends FormRequest
     {
         return [
             'event_id' => ['required', 'exists:events,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:25'],
         ];
     }
 
@@ -55,6 +58,10 @@ class StoreRegistrationRequest extends FormRequest
         return [
             'event_id.required' => 'Event wajib dipilih.',
             'event_id.exists' => 'Event tidak ditemukan.',
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'phone_number.required' => 'Nomor HP / WhatsApp wajib diisi.',
         ];
     }
 }

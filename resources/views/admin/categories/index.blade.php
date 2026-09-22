@@ -68,7 +68,7 @@
                                             Edit
                                         </a>
 
-                                        <form method="POST" action="{{ route('admin.categories.destroy', $category) }}" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kategori ini?');">
+                                        <form method="POST" action="{{ route('admin.categories.destroy', $category) }}" class="inline-block confirm-action" data-title="Hapus Kategori?" data-text="Apakah Anda yakin ingin menghapus kategori ini?" data-confirm-color="#e11d48">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded text-xs font-semibold transition">

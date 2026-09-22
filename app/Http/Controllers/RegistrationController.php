@@ -13,17 +13,40 @@ use Illuminate\View\View;
 
 class RegistrationController extends Controller
 {
+    public function create(Request $request, Event $event): View|RedirectResponse
+    {
+        $user = $request->user();
+
+        $event->load(['category', 'organizer'])
+            ->loadCount(['registrations as approved_registrations_count' => function ($q) {
+                $q->where('status', 'approved');
+            }]);
+
+        if ($user->registrations()->where('event_id', $event->id)->exists()) {
+            return redirect()->route('events.show', $event)
+                ->with('error', 'Anda sudah terdaftar pada event ini.');
+        }
+
+        if (! $event->canAcceptRegistrations()) {
+            return redirect()->route('events.show', $event)
+                ->with('error', 'Event ini tidak membuka pendaftaran atau kuota sudah penuh.');
+        }
+
+        return view('events.register', compact('event', 'user'));
+    }
+
     public function store(StoreRegistrationRequest $request): RedirectResponse
     {
-        Registration::create([
-            'user_id' => $request->user()->id,
-            'event_id' => $request->event_id,
-            'status' => 'pending',
-            'registered_at' => now(),
-        ]);
+        $data = $request->validated();
+        $data['user_id'] = $request->user()->id;
+        $data['status'] = 'pending';
+        $data['registered_at'] = now();
+
+        Registration::create($data);
 
         return redirect()->route('my.registrations')
-            ->with('success', 'Pendaftaran Anda berhasil dikirim dan menunggu persetujuan panitia.');
+            ->with('success', 'Pendaftaran berhasil! Detail tiket telah dikirim ke email ' . $data['email'] . '.')
+            ->with('email_sent_to', $data['email']);
     }
 
     public function myRegistrations(Request $request): View
@@ -119,13 +142,13 @@ class RegistrationController extends Controller
             $approvedCount = $event->approvedRegistrations()->count();
 
             if ($approvedCount >= $event->capacity) {
-                return back()->with('error', 'Kapasitas event sudah penuh ('.$event->capacity.' peserta). Tidak dapat menyetujui pendaftaran baru.');
+                return back()->with('error', 'Kapasitas event sudah penuh (' . $event->capacity . ' peserta). Tidak dapat menyetujui pendaftaran baru.');
             }
         }
 
         $registration->update(['status' => $newStatus]);
 
-        return back()->with('success', 'Status pendaftaran peserta berhasil diperbarui menjadi '.ucfirst($newStatus).'.');
+        return back()->with('success', 'Status pendaftaran peserta berhasil diperbarui menjadi ' . ucfirst($newStatus) . '.');
     }
 
     protected function authorizeEventRegistrationAccess(User $user, Event $event): void

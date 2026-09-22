@@ -4,6 +4,16 @@
         <p class="text-xs text-gray-500 mt-1">Masukkan email dan password Anda untuk melanjutkan.</p>
     </div>
 
+    <!-- Intended URL / Event Registration Notice -->
+    @if (session()->has('url.intended') && str_contains(session('url.intended'), 'register'))
+        <div class="mb-4 p-3 bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs rounded-xl flex items-center">
+            <svg class="w-4 h-4 text-indigo-600 me-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+            </svg>
+            Silakan login terlebih dahulu untuk melanjutkan pendaftaran event.
+        </div>
+    @endif
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade');
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone_number', 30)->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamps();

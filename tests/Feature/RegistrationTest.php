@@ -8,8 +8,11 @@ test('peserta can register for an upcoming event', function () {
     $peserta = User::factory()->peserta()->create();
     $event = Event::factory()->upcoming()->create(['capacity' => 10]);
 
-    $response = $this->actingAs($peserta)->post(route('events.register'), [
+    $response = $this->actingAs($peserta)->post(route('events.register.store'), [
         'event_id' => $event->id,
+        'name' => $peserta->name,
+        'email' => $peserta->email,
+        'phone_number' => '081234567890',
     ]);
 
     $response->assertRedirect(route('my.registrations'));
@@ -17,6 +20,7 @@ test('peserta can register for an upcoming event', function () {
         'user_id' => $peserta->id,
         'event_id' => $event->id,
         'status' => 'pending',
+        'phone_number' => '081234567890',
     ]);
 });
 
@@ -30,8 +34,11 @@ test('peserta cannot register twice for the same event', function () {
         'status' => 'pending',
     ]);
 
-    $response = $this->actingAs($peserta)->post(route('events.register'), [
+    $response = $this->actingAs($peserta)->post(route('events.register.store'), [
         'event_id' => $event->id,
+        'name' => $peserta->name,
+        'email' => $peserta->email,
+        'phone_number' => '081234567890',
     ]);
 
     $response->assertSessionHasErrors('event_id');
@@ -44,8 +51,11 @@ test('peserta cannot register when event capacity is full', function () {
     Registration::factory()->approved()->create(['event_id' => $event->id]);
     Registration::factory()->approved()->create(['event_id' => $event->id]);
 
-    $response = $this->actingAs($peserta)->post(route('events.register'), [
+    $response = $this->actingAs($peserta)->post(route('events.register.store'), [
         'event_id' => $event->id,
+        'name' => $peserta->name,
+        'email' => $peserta->email,
+        'phone_number' => '081234567890',
     ]);
 
     $response->assertSessionHasErrors('event_id');
@@ -56,10 +66,12 @@ test('peserta cannot register for draft or completed events', function () {
     $draftEvent = Event::factory()->draft()->create();
     $completedEvent = Event::factory()->completed()->create();
 
-    $this->actingAs($peserta)->post(route('events.register'), ['event_id' => $draftEvent->id])
+    $payload = ['name' => $peserta->name, 'email' => $peserta->email, 'phone_number' => '08111'];
+
+    $this->actingAs($peserta)->post(route('events.register.store'), array_merge($payload, ['event_id' => $draftEvent->id]))
         ->assertSessionHasErrors('event_id');
 
-    $this->actingAs($peserta)->post(route('events.register'), ['event_id' => $completedEvent->id])
+    $this->actingAs($peserta)->post(route('events.register.store'), array_merge($payload, ['event_id' => $completedEvent->id]))
         ->assertSessionHasErrors('event_id');
 });
 

@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('events.index') }}" class="flex items-center space-x-2">
                         <img src="{{ asset('images/SingleLogo.png') }}" alt="Logo" class="w-10 h-10">
-                        <span class="font-bold text-xl text-gray-800 tracking-tight">Evently<span class="text-indigo-600"></span></span>
+                        <span class="font-bold text-xl text-gray-800 tracking-tight">Evently<span class="text-indigo-600"></span>
                     </a>
                 </div>
 

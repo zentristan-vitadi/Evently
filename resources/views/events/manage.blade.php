@@ -142,7 +142,7 @@
                                                 Edit
                                             </a>
 
-                                            <form method="POST" action="{{ route('manage.events.destroy', $event) }}" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus event ini beserta seluruh data pendaftarannya?');">
+                                            <form method="POST" action="{{ route('manage.events.destroy', $event) }}" class="inline-block confirm-action" data-title="Hapus Event?" data-text="Apakah Anda yakin ingin menghapus event ini beserta seluruh data pendaftarannya?" data-confirm-color="#e11d48">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center px-2.5 py-1 bg-rose-50 text-rose-700 hover:bg-rose-100 rounded text-xs font-semibold transition">
