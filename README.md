@@ -1,58 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Evently
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistem pengelolaan event berbasis web untuk membantu organisasi sekolah mengelola event (seminar, workshop, lomba, pelatihan) secara terstruktur, terpusat, dan mudah dipantau — lengkap dengan pendaftaran peserta dan hak akses berbasis role.
 
-## About Laravel
+Dibangun sebagai bagian dari Sumatif Tengah Semester — LKPD Laravel Client Brief 01.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Daftar Isi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Evently](#evently)
+  - [Daftar Isi](#daftar-isi)
+  - [Latar Belakang](#latar-belakang)
+  - [Fitur](#fitur)
+  - [Role \& Hak Akses](#role--hak-akses)
+  - [Tech Stack](#tech-stack)
+  - [Struktur Database](#struktur-database)
+  - [Instalasi](#instalasi)
+  - [Struktur Role \& Middleware](#struktur-role--middleware)
+  - [Kompetensi yang Diterapkan](#kompetensi-yang-diterapkan)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Latar Belakang
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Sebelumnya, pengelolaan event di lingkungan sekolah dilakukan lewat beberapa media berbeda sehingga informasi event, peserta, jadwal, dan status pendaftaran sulit dipantau secara terpusat. Evently hadir sebagai satu sistem terpadu untuk menyelesaikan masalah tersebut.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Fitur
 
-## Agentic Development
+- **Manajemen Event** — create, edit, hapus, dan lihat detail event lengkap dengan kategori, jadwal, kapasitas, dan status
+- **Pendaftaran Event** — peserta dapat browsing event, melihat detail, dan mendaftar dengan validasi otomatis (cek kapasitas, cek duplikat pendaftaran, cek status event)
+- **Riwayat Pendaftaran** — peserta dapat memantau status pendaftarannya sendiri (pending / approved / rejected)
+- **Kelola Peserta** — panitia dapat melihat, mencari, dan memfilter peserta per event, serta melakukan approve/reject
+- **Search, Filter & Pagination** — tersedia di halaman list event dan list peserta
+- **Role-Based Access Control** — 3 level akses (admin, panitia, peserta) dengan custom middleware
+- **Dashboard per Role** — ringkasan data disesuaikan dengan tanggung jawab masing-masing role
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Role & Hak Akses
 
-```bash
-composer require laravel/boost --dev
+| Role | Tanggung Jawab |
+|---|---|
+| **Admin** | Kelola seluruh event, kategori, dan user lintas sistem |
+| **Panitia** | Kelola event miliknya sendiri, kelola & approve/reject peserta pada event tersebut |
+| **Peserta** | Browse event, mendaftar, memantau status pendaftaran sendiri |
 
-php artisan boost:install
+## Tech Stack
+
+- **Framework:** Laravel
+- **Template Engine:** Blade
+- **Database:** MySQL
+- **Auth:** Laravel Breeze
+- **Styling:** *(sesuaikan — misal Tailwind CSS)*
+
+## Struktur Database
+
+Evently terdiri dari 4 entity utama:
+
+```
+categories (1) ──── (M) events
+users (1) ──── (M) events                 [organizer_id]
+
+users (M) ──── (M) events   →  dijembatani oleh registrations
+    users (1) ──── (M) registrations
+    events (1) ──── (M) registrations
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+| Tabel | Keterangan |
+|---|---|
+| `users` | Data akun & role (admin/panitia/peserta) |
+| `categories` | Kategori event |
+| `events` | Data event: judul, deskripsi, lokasi, jadwal, kapasitas, status |
+| `registrations` | Data pendaftaran peserta ke event, beserta status approval |
 
-## Contributing
+## Instalasi
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Clone repository
+git clone <repo-url> evently
+cd evently
 
-## Code of Conduct
+# Install dependencies
+composer install
+npm install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+Sesuaikan kredensial database di `.env`:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=evently
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-## License
+Lanjutkan setup:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+# Buat database "evently" di MySQL terlebih dahulu, lalu:
+php artisan migrate
+
+# (opsional) seed data awal
+php artisan db:seed
+
+# Build assets
+npm run build
+
+# Jalankan server
+php artisan serve
+```
+
+## Struktur Role & Middleware
+
+Pembatasan akses diterapkan menggunakan custom middleware `CheckRole` yang dipasang pada route group masing-masing:
+
+```php
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // route khusus admin
+});
+
+Route::middleware(['auth', 'role:panitia'])->group(function () {
+    // route khusus panitia
+});
+
+Route::middleware(['auth', 'role:peserta'])->group(function () {
+    // route khusus peserta
+});
+```
+
+## Kompetensi yang Diterapkan
+
+- MVC
+- Blade Templating
+- Authentication & Authorization
+- Eloquent ORM & Relasi Database
+- ERD
+- Custom Middleware
+- Validation & FormRequest
+- Search, Filter & Pagination
+- N+1 Query Prevention / Eager Loading
+
+---
+
+**Dibuat oleh:** Zentristan Vitadi — XI-3
