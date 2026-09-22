@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/images/EventlyLOGO/logo.png" alt="Evently Logo" width="200">
+  <img src="public/images/EventlyLOGO.png" alt="Evently Logo" width="200">
 </p>
 
 Sistem pengelolaan event berbasis web untuk membantu organisasi sekolah mengelola event (seminar, workshop, lomba, pelatihan) secara terstruktur, terpusat, dan mudah dipantau — lengkap dengan pendaftaran peserta dan hak akses berbasis role.
