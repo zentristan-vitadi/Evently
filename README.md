@@ -1,4 +1,6 @@
-<p align="center"> <img src="public/images/EventlyLOGO.png" alt="Evently Logo" width="200"> </p>
+<p align="center">
+  <img src="public/images/EventlyLOGO/logo.png" alt="Evently Logo" width="200">
+</p>
 
 Sistem pengelolaan event berbasis web untuk membantu organisasi sekolah mengelola event (seminar, workshop, lomba, pelatihan) secara terstruktur, terpusat, dan mudah dipantau — lengkap dengan pendaftaran peserta dan hak akses berbasis role.
 
@@ -14,6 +16,7 @@ Dibangun sebagai bagian dari Sumatif Tengah Semester — LKPD Laravel Client Bri
 - [Role \& Hak Akses](#role--hak-akses)
 - [Tech Stack](#tech-stack)
 - [Struktur Database](#struktur-database)
+- [Instalasi](#instalasi)
 - [Struktur Role \& Middleware](#struktur-role--middleware)
 - [Kompetensi yang Diterapkan](#kompetensi-yang-diterapkan)
 
@@ -69,6 +72,48 @@ users (M) ──── (M) events   →  dijembatani oleh registrations
 | `events` | Data event: judul, deskripsi, lokasi, jadwal, kapasitas, status |
 | `registrations` | Data pendaftaran peserta ke event, beserta status approval |
 
+## Instalasi
+
+```bash
+# Clone repository
+git clone <repo-url> evently
+cd evently
+
+# Install dependencies
+composer install
+npm install
+
+# Setup environment
+cp .env.example .env
+php artisan key:generate
+```
+
+Sesuaikan kredensial database di `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=evently
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Lanjutkan setup:
+
+```bash
+# Buat database "evently" di MySQL terlebih dahulu, lalu:
+php artisan migrate
+
+# (opsional) seed data awal
+php artisan db:seed
+
+# Build assets
+npm run build
+
+# Jalankan server
+php artisan serve
+```
 
 ## Struktur Role & Middleware
 
